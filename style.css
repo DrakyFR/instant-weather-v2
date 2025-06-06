@@ -1,644 +1,789 @@
+/* Importation de police moderne */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Variables pour les couleurs */
+/* Variables de thème - Thème Clair (Bleu & Blanc) */
 :root {
-    --orange: #ff6b35;
-    --orange-clair: #ff8c42;
-    --orange-fonce: #e55a2b;
-    --noir: #1a1a1a;
-    --noir-leger: #2c2c2c;
+    /* Couleurs principales */
+    --primaire: #007bff; /* Bleu vif */
+    --secondaire: #0056b3; /* Bleu foncé */
+    --succes: #28a745;
+    --avertissement: #ffc107;
+    --danger: #dc3545;
+
+    /* Couleurs de fond et texte - Thème Clair */
+    --arriere-plan-principal: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%); /* Dégradé de bleu clair */
+    --arriere-plan-carte: #ffffff; /* Blanc pur pour les cartes */
+    --arriere-plan-barre-laterale: rgba(255, 255, 255, 0.95); /* Blanc transparent */
+    --texte-principal: var(--gris-800);
+    --texte-secondaire: var(--gris-600);
+    --texte-leger: var(--gris-500);
+    --couleur-bordure: rgba(0, 0, 0, 0.1); /* Bordures légères */
+    --arriere-plan-saisie: var(--blanc);
+    --texte-saisie: var(--gris-700);
+    --placeholder-saisie: var(--gris-400);
+    --arriere-plan-placeholder-carte: linear-gradient(135deg, var(--gris-50), var(--gris-100));
+    --arriere-plan-info-carte: var(--gris-100);
+    --arriere-plan-element-detail: var(--gris-50);
+    --arriere-plan-survol-element-detail: var(--gris-100);
+
+    /* Nuances de gris */
+    --gris-50: #f8f9fa;
+    --gris-100: #e9ecef;
+    --gris-200: #dee2e6;
+    --gris-300: #ced4da;
+    --gris-400: #adb5bd;
+    --gris-500: #6c757d;
+    --gris-600: #495057;
+    --gris-700: #343a40;
+    --gris-800: #212529;
+    --gris-900: #101214;
     --blanc: #ffffff;
-    --gris: #f8f9fa;
-    --gris-fonce: #6c757d;
-    --shadow: rgba(0, 0, 0, 0.1);
-    --shadow-hover: rgba(255, 107, 53, 0.3);
+
+    /* Ombres pour donner de la profondeur */
+    --ombre-petite: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --ombre: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --ombre-grande: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --ombre-extra-grande: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* Style de base */
+/* Variables pour le mode sombre */
+body.mode-sombre {
+    --arriere-plan-principal: #1f2937; /* Fond sombre */
+    --arriere-plan-carte: #2f3a47; /* Cartes plus sombres */
+    --arriere-plan-barre-laterale: rgba(47, 58, 71, 0.95);
+    --texte-principal: var(--gris-50);
+    --texte-secondaire: var(--gris-300);
+    --texte-leger: var(--gris-400);
+    --couleur-bordure: rgba(60, 70, 80, 0.5);
+    --arriere-plan-saisie: #374151;
+    --texte-saisie: var(--gris-100);
+    --placeholder-saisie: var(--gris-500);
+    --arriere-plan-placeholder-carte: linear-gradient(135deg, var(--gris-700), var(--gris-800));
+    --arriere-plan-info-carte: var(--gris-700);
+    --arriere-plan-element-detail: var(--gris-700);
+    --arriere-plan-survol-element-detail: var(--gris-600);
+}
+
+/* Réinitialisation pour tous les éléments */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Style de base pour toute la page */
 body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    color: var(--noir);
-    line-height: 1.6;
+    background: var(--arriere-plan-principal);
     min-height: 100vh;
-    transition: all 0.3s ease;
+    color: var(--texte-principal);
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Mode sombre */
-body.sombre {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-    color: var(--blanc);
-}
-
-body.sombre .conteneur,
-body.sombre .panneau-gauche, 
-body.sombre .panneau-centre, 
-body.sombre .panneau-droite {
-    background: rgba(44, 44, 44, 0.95);
+/* En-tête qui reste collé en haut */
+.en-tete-fixe {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--arriere-plan-barre-laterale);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--couleur-bordure);
+    padding: 1rem 0;
+    box-shadow: var(--ombre-grande);
 }
 
-body.sombre input, body.sombre select {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--blanc);
-    border-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+/* Conteneur de l'en-tête */
+.conteneur-en-tete {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
 }
 
-body.sombre input:focus, body.sombre select:focus {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--orange);
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
-}
-
-/* En-tête  */
-.en-tete {
-    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-clair) 100%);
-    color: white;
-    text-align: center;
-    padding: 30px 20px;
-    position: relative;
-    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
-    backdrop-filter: blur(20px);
-    overflow: hidden;
-}
-
-.en-tete::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-    animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.en-tete h1 {
-    font-size: 2.5rem;
+/* Logo du site */
+.logo h1 {
+    font-size: 1.75rem;
     font-weight: 700;
-    margin-bottom: 10px;
+    color: var(--primaire);
+    white-space: nowrap;
+}
+
+/* Formulaire de recherche dans l'en-tête */
+.formulaire-recherche {
+    flex: 1;
+    max-width: 800px;
+}
+
+/* Conteneur des champs de recherche */
+.champs-recherche {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--arriere-plan-saisie);
+    padding: 0.75rem;
+    border-radius: 50px;
+    box-shadow: var(--ombre-grande);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+/* Quand on clique dans un champ, ça s'illumine */
+.champs-recherche:focus-within {
+    border-color: var(--primaire);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Boîte pour chaque champ de saisie */
+.boite-saisie {
     position: relative;
-    z-index: 2;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    animation: fadeInUp 1s ease-out;
+    flex: 1;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.bouton-theme {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    background: rgba(255, 255, 255, 0.2);
+/* Les champs de saisie (texte et liste déroulante) */
+.boite-saisie input,
+.boite-saisie select {
+    width: 100%;
     border: none;
-    color: white;
-    padding: 15px;
+    outline: none;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    background: transparent;
+    color: var(--texte-saisie);
+}
+
+/* Texte d'aide dans les champs */
+.boite-saisie input::placeholder {
+    color: var(--placeholder-saisie);
+}
+
+/* Ligne animée sous les champs */
+.ligne-saisie {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primaire);
+    transition: width 0.3s ease;
+}
+
+/* Quand on clique dans un champ, la ligne grandit */
+.boite-saisie input:focus + .ligne-saisie,
+.boite-saisie select:focus + .ligne-saisie {
+    width: 100%;
+}
+
+/* Compteur pour choisir le nombre de jours */
+.compteur-jours {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gris-50);
+    padding: 0.5rem;
+    border-radius: 25px;
+    white-space: nowrap;
+}
+
+/* Boutons + et - du compteur */
+.bouton-compteur {
+    width: 32px;
+    height: 32px;
+    border: none;
     border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.3rem;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    z-index: 3;
-}
-
-.bouton-theme:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1) rotate(180deg);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-
-.conteneur {
-    max-width: 1200px;
-    margin: -20px auto 40px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    box-shadow: 0 20px 40px var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    animation: slideUp 1s ease-out 0.3s both;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* 3 colonnes option/code postale/future map */
-.disposition-principale {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.panneau-gauche, .panneau-centre, .panneau-droite {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(15px);
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-    animation: fadeIn 1s ease-out;
-}
-
-.panneau-gauche:hover, .panneau-centre:hover, .panneau-droite:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px var(--shadow-hover);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.panneau-gauche h3, .panneau-droite h3 {
-    color: var(--orange);
-    margin-bottom: 20px;
-    text-align: center;
+    background: var(--primaire);
+    color: white;
     font-size: 1.2rem;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Effet au survol des boutons */
+.bouton-compteur:hover {
+    background: var(--secondaire);
+    transform: scale(1.1);
+}
+
+/* Affichage du nombre de jours */
+.affichage-compteur {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primaire);
+    min-width: 2rem;
+    text-align: center;
+}
+
+/* Petit texte "jours" */
+.compteur-jours small {
+    color: var(--gris-500);
+    font-size: 0.875rem;
+}
+
+/* Bouton pour lancer la recherche */
+.bouton-recherche {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primaire), var(--secondaire));
+    color: white;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--ombre);
+}
+
+/* Effet au survol du bouton de recherche */
+.bouton-recherche:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: var(--ombre-extra-grande);
+}
+
+/* Bouton pour changer de thème */
+.bouton-changement-theme {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--gris-600);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.bouton-changement-theme:hover {
+    color: var(--primaire);
+    transform: scale(1.1);
+}
+
+/* Gestion des icônes lune/soleil selon le thème */
+body.mode-sombre .bouton-changement-theme .fa-moon {
+    display: none; /* Cache la lune en mode sombre */
+}
+
+body.mode-sombre .bouton-changement-theme .fa-sun {
+    display: inline-block; /* Montre le soleil en mode sombre */
+    color: var(--avertissement);
+}
+
+body:not(.mode-sombre) .bouton-changement-theme .fa-sun {
+    display: none; /* Cache le soleil en mode clair */
+}
+
+body:not(.mode-sombre) .bouton-changement-theme .fa-moon {
+    display: inline-block; /* Montre la lune en mode clair */
+    color: var(--gris-600);
+}
+
+/* Zone principale du contenu */
+.contenu-principal-nouveau {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* Enveloppe du contenu */
+.enveloppe-contenu {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* Section des options d'affichage */
+.section-options {
+    background: var(--arriere-plan-carte);
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: var(--ombre-extra-grande);
+    border: 1px solid var(--couleur-bordure);
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+/* Titre de la section options */
+.section-options h3 {
+    color: var(--primaire);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Grille des boutons d'options */
+.boutons-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+/* Chaque option avec son interrupteur */
+.option-bouton {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+/* Effet au survol des options */
+.option-bouton:hover {
+    background: rgba(0, 123, 255, 0.1);
+}
+
+/* Cache la checkbox par défaut */
+.option-bouton input[type="checkbox"] {
+    display: none;
+}
+
+/* L'interrupteur visuel (toggle) */
+.interrupteur-bouton {
+    width: 40px;
+    height: 20px;
+    background: var(--gris-300);
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+/* Le petit cercle de l'interrupteur */
+.interrupteur-bouton::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: var(--ombre-petite);
+}
+
+/* Quand l'option est activée */
+.option-bouton input[type="checkbox"]:checked + .interrupteur-bouton {
+    background: var(--primaire);
+}
+
+/* Le cercle se déplace à droite quand activé */
+.option-bouton input[type="checkbox"]:checked + .interrupteur-bouton::after {
+    transform: translateX(20px);
+}
+
+/* Texte de chaque option */
+.option-bouton span {
+    font-size: 0.875rem;
+    color: var(--texte-secondaire);
+    font-weight: 500;
+}
+
+/* Section de la carte */
+.section-carte-nouvelle {
+    position: static;
+    width: 100%;
+    height: 400px;
+    background: var(--arriere-plan-carte);
+    border-radius: 20px;
+    box-shadow: var(--ombre-extra-grande);
+    overflow: hidden;
+    border: 1px solid var(--couleur-bordure);
+    margin-bottom: 2rem;
+}
+
+/* Conteneur de la carte */
+.conteneur-carte {
+    height: calc(100% - 50px);
     position: relative;
 }
 
-.panneau-gauche h3::after, .panneau-droite h3::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 3px;
-    background: linear-gradient(45deg, var(--orange), var(--orange-clair));
-    border-radius: 2px;
+/* Placeholder quand il n'y a pas de carte */
+.placeholder-carte {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--arriere-plan-placeholder-carte);
+    color: var(--gris-400);
 }
 
-/* Formulaire */
-.groupe-formulaire {
-    margin-bottom: 25px;
+/* Contenu du placeholder */
+.contenu-placeholder {
+    text-align: center;
 }
 
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--orange);
-    font-size: 0.95rem;
+/* Icône du placeholder */
+.contenu-placeholder i {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: var(--gris-300);
 }
 
-input, select {
+/* Informations en bas de la carte */
+.info-carte {
+    height: 50px;
+    padding: 1rem;
+    background: var(--arriere-plan-info-carte);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: var(--texte-secondaire);
+    border-top: 1px solid var(--gris-200);
+}
+
+/* La vraie carte quand elle s'affiche */
+#map-display {
+    height: 100%;
     width: 100%;
-    padding: 15px;
-    border: 2px solid rgba(255, 107, 53, 0.2);
-    border-radius: 10px;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    font-family: 'Inter', sans-serif;
 }
 
-input:focus, select:focus {
-    border-color: var(--orange);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
-    background: rgba(255, 255, 255, 0.95);
+/* Grille pour afficher les résultats météo */
+.grille-resultats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0;
+    margin: 0;
+}
+
+/* Chaque carte météo */
+.carte-meteo {
+    background: var(--arriere-plan-carte);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--ombre-grande);
+    border: 1px solid var(--couleur-bordure);
+    position: relative;
+    transform: translateX(0);
+    opacity: 0;
+    animation: apparitionAvecEchelle 0.6s ease forwards;
+    margin-bottom: 0;
+}
+
+/* Animation d'apparition des cartes */
+@keyframes apparitionAvecEchelle {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Délai d'animation pour que les cartes apparaissent une par une */
+.carte-meteo:nth-child(1) { animation-delay: 0.1s; }
+.carte-meteo:nth-child(2) { animation-delay: 0.2s; }
+.carte-meteo:nth-child(3) { animation-delay: 0.3s; }
+.carte-meteo:nth-child(4) { animation-delay: 0.4s; }
+.carte-meteo:nth-child(5) { animation-delay: 0.5s; }
+.carte-meteo:nth-child(6) { animation-delay: 0.6s; }
+.carte-meteo:nth-child(7) { animation-delay: 0.7s; }
+
+/* Effet au survol des cartes météo */
+.carte-meteo:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--ombre-extra-grande);
+    transition: all 0.3s ease;
+}
+
+/* En-tête de chaque carte météo */
+.en-tete-meteo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+/* Date affichée dans la carte */
+.date-meteo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--texte-principal);
+}
+
+/* Sous-titre avec la date complète */
+.date-meteo + div {
+    color: var(--texte-leger) !important;
+}
+
+/* Icône météo (soleil, nuage, etc.) */
+.icone-meteo {
+    font-size: 3rem;
+}
+
+/* Température principale */
+.temperature-meteo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primaire);
+}
+
+/* Corps de la carte météo */
+.corps-meteo {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Informations principales de la météo */
+.info-principale-meteo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Description du temps (ensoleillé, nuageux, etc.) */
+.description-meteo {
+    font-size: 1.1rem;
+    color: var(--texte-secondaire);
+    font-weight: 500;
+}
+
+/* Plage de températures min/max */
+.plage-temperature {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Température minimale et maximale */
+.temp-min, .temp-max {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--texte-leger);
+}
+
+/* Couleurs des icônes de température */
+.temp-min i { color: var(--primaire); }
+.temp-max i { color: var(--danger); }
+
+/* Nom de la ville en bas à droite */
+.corps-meteo > div:last-child {
+    color: var(--texte-leger) !important;
+}
+
+/* Détails optionnels de la météo */
+.details-meteo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gris-200);
+}
+
+/* Chaque élément de détail (pluie, vent, etc.) */
+.element-detail {
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--arriere-plan-element-detail);
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+/* Effet au survol des éléments de détail */
+.element-detail:hover {
+    background: var(--arriere-plan-survol-element-detail);
     transform: translateY(-2px);
 }
 
-/* Sélecteur de jours */
-.selecteur-jours {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 15px;
-    justify-content: center;
+/* Label des détails (PLUIE, VENT, etc.) */
+.label-detail {
+    font-size: 0.75rem;
+    color: var(--texte-leger);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.bouton-jour {
-    padding: 12px 18px;
-    border: 2px solid var(--orange);
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--orange);
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-}
-
-.bouton-jour:hover,
-.bouton-jour.actif {
-    color: white;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px var(--shadow-hover);
-}
-
-.bouton-jour:hover::before,
-.bouton-jour.actif::before {
-    left: 0;
-}
-
-/* Options */
-.options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.option {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 15px;
-    background: rgba(248, 249, 250, 0.8);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 107, 53, 0.1);
-}
-
-.option:hover {
-    background: rgba(255, 107, 53, 0.1);
-    transform: translateX(5px);
-    border-color: var(--orange);
-}
-
-body.sombre .option {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-body.sombre .option:hover {
-    background: rgba(255, 107, 53, 0.2);
-}
-
-.option input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--orange);
-}
-
-.option label {
-    margin: 0;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-/* Loader planète */
-.planet-loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    padding: 40px;
-}
-
-.planet {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, 
-        #4FC3F7 0%, 
-        #29B6F6 25%, 
-        #03A9F4 50%, 
-        #0288D1 75%, 
-        #0277BD 100%
-    );
-    position: relative;
-    animation: planetRotate 3s linear infinite;
-    box-shadow: 
-        inset -30px -30px 60px rgba(0,0,0,0.4),
-        0 0 50px rgba(3, 169, 244, 0.3),
-        0 0 100px rgba(3, 169, 244, 0.1);
-    overflow: hidden;
-}
-
-
-.planet::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(ellipse 25px 40px at 45% 35%, #4CAF50 0%, #4CAF50 70%, transparent 71%),
-        radial-gradient(ellipse 15px 20px at 40% 25%, #66BB6A 0%, #66BB6A 70%, transparent 71%),
-        radial-gradient(ellipse 35px 30px at 70% 30%, #388E3C 0%, #388E3C 70%, transparent 71%),
-        radial-gradient(ellipse 20px 35px at 20% 60%, #43A047 0%, #43A047 70%, transparent 71%),
-        radial-gradient(ellipse 25px 30px at 15% 35%, #2E7D32 0%, #2E7D32 70%, transparent 71%),
-        radial-gradient(ellipse 12px 8px at 75% 70%, #558B2F 0%, #558B2F 70%, transparent 71%);
-    border-radius: 50%;
-    animation: continentsRotate 3s linear infinite;
-}
-
-/* Nuages */
-.planet::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(ellipse 20px 10px at 30% 20%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 50%, transparent 70%),
-        radial-gradient(ellipse 15px 8px at 60% 40%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 50%, transparent 70%),
-        radial-gradient(ellipse 18px 12px at 80% 65%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 70%),
-        radial-gradient(ellipse 25px 15px at 10% 75%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 50%, transparent 70%);
-    border-radius: 50%;
-    animation: cloudsMove 8s linear infinite;
-}
-
-.orbit {
-    width: 160px;
-    height: 160px;
-    border: 2px dashed var(--orange);
-    border-radius: 50%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: orbitRotate 4s linear infinite;
-    opacity: 0.7;
-}
-
-.satellite {
-    width: 10px;
-    height: 10px;
-    background: var(--orange);
-    border-radius: 50%;
-    position: absolute;
-    top: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 
-        0 0 15px var(--orange),
-        0 0 30px rgba(255, 107, 53, 0.5);
-    animation: satellitePulse 2s ease-in-out infinite;
-}
-
-/* étoiles  */
-.stars {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    animation: starsRotate 20s linear infinite;
-}
-
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: var(--orange);
-    border-radius: 50%;
-    box-shadow: 0 0 6px var(--orange);
-    animation: starTwinkle 3s ease-in-out infinite;
-}
-
-.star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
-.star:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
-.star:nth-child(3) { bottom: 25%; left: 10%; animation-delay: 2s; }
-.star:nth-child(4) { bottom: 15%; right: 25%; animation-delay: 0.5s; }
-.star:nth-child(5) { top: 40%; left: 5%; animation-delay: 1.5s; }
-.star:nth-child(6) { top: 60%; right: 8%; animation-delay: 2.5s; }
-
-.loading-text {
-    color: var(--orange);
-    font-size: 1.2rem;
+/* Valeur des détails (15 mm, 20 km/h, etc.) */
+.valeur-detail {
+    font-size: 1rem;
     font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    animation: textPulse 2s ease-in-out infinite;
-    text-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+    color: var(--texte-principal);
 }
 
-body.sombre .loading-text {
-    color: var(--orange-clair);
-}
-
-body.sombre .orbit {
-    border-color: var(--orange-clair);
-}
-
-body.sombre .satellite {
-    background: var(--orange-clair);
-    box-shadow: 
-        0 0 15px var(--orange-clair),
-        0 0 30px rgba(255, 140, 66, 0.5);
-}
-
-body.sombre .star {
-    background: var(--orange-clair);
-    box-shadow: 0 0 6px var(--orange-clair);
-}
-
-@keyframes planetRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes continentsRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes cloudsMove {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(180deg);
-    }
-}
-
-@keyframes orbitRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(-360deg);
-    }
-}
-
-@keyframes satellitePulse {
-    0%, 100% {
-        transform: translateX(-50%) scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: translateX(-50%) scale(1.2);
-        opacity: 0.8;
-    }
-}
-
-@keyframes starsRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes starTwinkle {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.5);
-    }
-}
-
-@keyframes textPulse {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.05);
-    }
-}
-
-
-.chargement, .erreur {
-    text-align: center;
-    padding: 25px;
-    border-radius: 12px;
-    margin: 25px 0;
-    backdrop-filter: blur(10px);
-    position: relative;
-}
-
+/* Indicateur de chargement */
 .chargement {
-    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-    color: #1976d2;
-    border: 1px solid rgba(25, 118, 210, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
 }
 
-.erreur {
-    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
-    color: #c62828;
-    border: 1px solid rgba(198, 40, 40, 0.2);
-    animation: shake 0.5s ease-in-out;
+/* Quand le chargement est caché */
+.chargement.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+/* Contenu du chargement */
+.contenu-chargement {
+    background: var(--arriere-plan-carte);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: var(--ombre-extra-grande);
+    color: var(--texte-principal);
 }
 
-body.sombre .chargement {
-    background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
-    color: #90caf9;
+/* Icône qui pulse pendant le chargement */
+.icone-meteo-chargement {
+    font-size: 3rem;
+    animation: pulsation 1.5s ease-in-out infinite;
 }
 
-body.sombre .erreur {
-    background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%);
-    color: #ffcdd2;
+/* Animation de pulsation */
+@keyframes pulsation {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
-/* animations */
-@media (max-width: 900px) {
-    .disposition-principale {
+/* Message d'erreur qui apparaît en haut à droite */
+.toast-erreur {
+    position: fixed;
+    top: 100px;
+    right: 2rem;
+    background: var(--danger);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--ombre-grande);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 1001;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Quand l'erreur est visible */
+.toast-erreur:not(.hidden) {
+    transform: translateX(0);
+}
+
+/* Design   pour les écrans plus grands */
+@media (min-width: 992px) {
+    .contenu-principal-nouveau {
         grid-template-columns: 1fr;
-        gap: 20px;
     }
     
-    .panneau-gauche, .panneau-centre, .panneau-droite {
-        animation-delay: 0.1s;
+    .enveloppe-contenu {
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+    }
+
+    .section-options {
+        margin-top: 0;
+        position: sticky;
+        top: calc(1rem + 80px);
+        height: fit-content;
+    }
+
+    .zone-affichage-principal {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
     }
 }
 
-@media (max-width: 600px) {
-    .conteneur {
-        margin: -10px 15px 30px;
-        padding: 20px;
+/* Design pour les tablettes */
+@media (max-width: 991px) {
+    .conteneur-en-tete {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .formulaire-recherche {
+        width: 100%;
+    }
+    .bouton-changement-theme {
+        order: -1;
     }
 
-    .en-tete h1 {
-        font-size: 2rem;
+    .section-options,
+    .section-carte-nouvelle {
+        margin: 1rem auto;
+        width: calc(100% - 2rem);
     }
 
-    .selecteur-jours {
+    .section-carte-nouvelle {
+        height: 300px;
+    }
+
+    .grille-resultats {
+        padding: 0 1rem;
+    }
+}
+
+/* Design pour les mobiles */
+@media (max-width: 768px) {
+    .champs-recherche {
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: 20px;
+        padding: 1rem;
+    }
+    .boite-saisie {
+        width: 100%;
+    }
+    .compteur-jours {
+        width: 100%;
         justify-content: center;
     }
-
-    .bouton-jour {
-        padding: 10px 15px;
-        font-size: 0.9rem;
+    .bouton-recherche {
+        width: 100%;
+        border-radius: 10px;
+        height: 48px;
     }
 
-    .info-meteo {
+    .en-tete-fixe {
+        padding: 0.75rem 0;
+    }
+    .conteneur-en-tete {
+        padding: 0 1rem;
+    }
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Design pour Nokia 3310 */
+@media (max-width: 480px) {
+    .contenu-principal-nouveau {
+        padding: 1rem;
+    }
+    .carte-meteo {
+        padding: 1.5rem;
+    }
+    .details-meteo {
         grid-template-columns: 1fr;
     }
-
-    .apercu-carte {
-        height: 180px;
-    }
-}
-
-/* Animations d'entrée */
-.panneau-gauche {
-    animation-delay: 0.1s;
-}
-
-.panneau-centre {
-    animation-delay: 0.2s;
-}
-
-.panneau-droite {
-    animation-delay: 0.3s;
-}
-
-/* Scroll smooth */
-html {
-    scroll-behavior: smooth;
 }
