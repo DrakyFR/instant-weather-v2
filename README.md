@@ -31,3 +31,13 @@ Le projet **Instant Météo V2** est construit avec les technologies suivantes :
 * **Leaflet.js** : Une bibliothèque JavaScript légère pour l'intégration de cartes interactives.
 * **Font Awesome** : Utilisation d'icônes vectorielles pour enrichir l'interface.
 * **API Météo** : La récupération des données météorologiques s'effectue via une API externe. Une clé API est indispensable pour le bon fonctionnement de l'application.
+
+
+## Validation et Certification W3C
+
+**Ce projet a été validé avec succès par les validateurs officiels du W3C pour son code HTML et CSS.**
+
+* **Validation CSS (Jigsaw W3C Validator) :**
+    [https://jigsaw.w3.org/css-validator/](https://jigsaw.w3.org/css-validator/)
+* **Validation HTML (Nu HTML Checker) :**
+    [https://validator.w3.org/nu/?doc=https%3A%2F%2Fdrakyfr.github.io%2Finstant-weather-v2%2F](https://validator.w3.org/nu/?doc=https%3A%2F%2Fdrakyfr.github.io%2Finstant-weather-v2%2F)
