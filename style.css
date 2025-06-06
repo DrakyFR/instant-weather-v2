@@ -58,7 +58,7 @@ body.sombre input:focus, body.sombre select:focus {
     box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
 }
 
-/* En-tête avec effet glassmorphism */
+/* En-tête  */
 .en-tete {
     background: linear-gradient(135deg, var(--orange) 0%, var(--orange-clair) 100%);
     color: white;
@@ -129,7 +129,7 @@ body.sombre input:focus, body.sombre select:focus {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Conteneur principal avec glassmorphism */
+
 .conteneur {
     max-width: 1200px;
     margin: -20px auto 40px;
@@ -153,7 +153,7 @@ body.sombre input:focus, body.sombre select:focus {
     }
 }
 
-/* Layout principal en 3 colonnes avec animations */
+/* 3 colonnes option/code postale/future map */
 .disposition-principale {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -259,6 +259,26 @@ input:focus, select:focus {
     position: relative;
     overflow: hidden;
 }
+
+.bouton-jour:hover,
+.bouton-jour.actif {
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px var(--shadow-hover);
+}
+
+.bouton-jour:hover::before,
+.bouton-jour.actif::before {
+    left: 0;
+}
+
+/* Options */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 
 
 /* Loader planète */
@@ -567,7 +587,7 @@ body.sombre .erreur {
     }
 }
 
-/* Animations d'entrée séquentielles */
+/* Animations d'entrée */
 .panneau-gauche {
     animation-delay: 0.1s;
 }
