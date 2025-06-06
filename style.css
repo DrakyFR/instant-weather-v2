@@ -279,7 +279,45 @@ input:focus, select:focus {
     gap: 15px;
 }
 
+.option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: rgba(248, 249, 250, 0.8);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 107, 53, 0.1);
+}
 
+.option:hover {
+    background: rgba(255, 107, 53, 0.1);
+    transform: translateX(5px);
+    border-color: var(--orange);
+}
+
+body.sombre .option {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.sombre .option:hover {
+    background: rgba(255, 107, 53, 0.2);
+}
+
+.option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--orange);
+}
+
+.option label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: 500;
+}
 
 /* Loader planète */
 .planet-loader {
