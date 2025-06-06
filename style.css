@@ -203,6 +203,43 @@ body.sombre input:focus, body.sombre select:focus {
     border-radius: 2px;
 }
 
+/* Formulaire */
+.groupe-formulaire {
+    margin-bottom: 25px;
+}
+
+
+/* Loader planète */
+.planet-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px;
+}
+
+.planet {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, 
+        #4FC3F7 0%, 
+        #29B6F6 25%, 
+        #03A9F4 50%, 
+        #0288D1 75%, 
+        #0277BD 100%
+    );
+    position: relative;
+    animation: planetRotate 3s linear infinite;
+    box-shadow: 
+        inset -30px -30px 60px rgba(0,0,0,0.4),
+        0 0 50px rgba(3, 169, 244, 0.3),
+        0 0 100px rgba(3, 169, 244, 0.1);
+    overflow: hidden;
+}
+
+
 .planet::before {
     content: '';
     position: absolute;
@@ -211,23 +248,17 @@ body.sombre input:focus, body.sombre select:focus {
     width: 100%;
     height: 100%;
     background-image: 
-        /* Afrique */
         radial-gradient(ellipse 25px 40px at 45% 35%, #4CAF50 0%, #4CAF50 70%, transparent 71%),
-        /* Europe */
         radial-gradient(ellipse 15px 20px at 40% 25%, #66BB6A 0%, #66BB6A 70%, transparent 71%),
-        /* Asie */
         radial-gradient(ellipse 35px 30px at 70% 30%, #388E3C 0%, #388E3C 70%, transparent 71%),
-        /* Amérique du Sud */
         radial-gradient(ellipse 20px 35px at 20% 60%, #43A047 0%, #43A047 70%, transparent 71%),
-        /* Amérique du Nord */
         radial-gradient(ellipse 25px 30px at 15% 35%, #2E7D32 0%, #2E7D32 70%, transparent 71%),
-        /* Australie */
         radial-gradient(ellipse 12px 8px at 75% 70%, #558B2F 0%, #558B2F 70%, transparent 71%);
     border-radius: 50%;
     animation: continentsRotate 3s linear infinite;
 }
 
-/* Nuages qui bougent */
+/* Nuages */
 .planet::after {
     content: '';
     position: absolute;
@@ -272,7 +303,7 @@ body.sombre input:focus, body.sombre select:focus {
     animation: satellitePulse 2s ease-in-out infinite;
 }
 
-/* Petites étoiles autour */
+/* étoiles  */
 .stars {
     position: absolute;
     width: 200px;
@@ -405,7 +436,7 @@ body.sombre .star {
     }
 }
 
-/* Messages avec animations */
+
 .chargement, .erreur {
     text-align: center;
     padding: 25px;
@@ -444,9 +475,7 @@ body.sombre .erreur {
     color: #ffcdd2;
 }
 
-/* Loading spinner - SUPPRIMÉ */
-
-/* Responsive avec animations */
+/* animations */
 @media (max-width: 900px) {
     .disposition-principale {
         grid-template-columns: 1fr;
