@@ -5,74 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Météo Simple</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://kit.fontawesome.com/8c6e91eb25.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="en-tete">
-        <h1>☀ Météo Simple</h1>
+<body> 
+    <div id="loader-initial" class="loader-initial">
+        <div class="planet-loader">
+            <div style="position: relative;">
+                <div class="stars">
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                </div>
+                <div class="planet"></div>
+                <div class="orbit">
+                    <div class="satellite"></div>
+                </div>
+            </div>
+            
+        </div>
     </div>
 
-    <div class="conteneur">
-        <div class="disposition-principale">
-            <div class="panneau-gauche">
-                <h3>⚙ Options météo</h3>
-                <div class="options">
-                    <div class="option">
-                        <input type="checkbox" id="latitude" value="latitude">
-                        <label for="latitude">🌐 Latitude</label>
+    <div id="contenu-principal" class="contenu-principal">
+        <div class="en-tete">
+            <h1><i class="fas fa-sun"></i> Météo Simple</h1>
+            <button class="bouton-theme" id="basculeur-theme"><i class="fas fa-moon"></i></button>
+        </div>
+
+        <div class="conteneur">
+            <div class="disposition-principale">
+                <div class="panneau-gauche">
+                    <h3><i class="fas fa-cogs"></i> Options météo</h3>
+                    <div class="options">
+                        <div class="option">
+                            <input type="checkbox" id="latitude" value="latitude">
+                            <label for="latitude"><i class="fas fa-globe"></i> Latitude</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="longitude" value="longitude">
+                            <label for="longitude"><i class="fas fa-map-marked-alt"></i> Longitude</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="pluie" value="pluie">
+                            <label for="pluie"><i class="fas fa-umbrella"></i> Pluie (mm)</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="vent" value="vent">
+                            <label for="vent"><i class="fas fa-wind"></i> Vent (km/h)</label>
+                        </div>
+                        <div class="option">
+                            <input type="checkbox" id="direction-vent" value="direction-vent">
+                            <label for="direction-vent"><i class="fas fa-compass"></i> Direction vent (°)</label>
+                        </div>
                     </div>
-                    <div class="option">
-                        <input type="checkbox" id="longitude" value="longitude">
-                        <label for="longitude">🗺 Longitude</label>
+                </div>
+
+                <div class="panneau-centre">
+                    <form id="formulaire-meteo">
+                        <div class="groupe-formulaire">
+                            <label for="code-postal">Code postal :</label>
+                            <input type="text" id="code-postal" placeholder="Ex: 75001" maxlength="5" required>
+                        </div>
+                        <div class="groupe-formulaire">
+                            <label for="ville">Ville :</label>
+                            <select id="ville" required>
+                                <option value="">Choisissez une ville</option>
+                            </select>
+                        </div>
+                        <div class="groupe-formulaire">
+                            <label>Nombre de jours :</label>
+                            <div class="selecteur-jours">
+                                <button type="button" class="bouton-jour" data-jours="1">1 jour</button>
+                                <button type="button" class="bouton-jour" data-jours="2">2 jours</button>
+                                <button type="button" class="bouton-jour actif" data-jours="3">3 jours</button>
+                                <button type="button" class="bouton-jour" data-jours="4">4 jours</button>
+                                <button type="button" class="bouton-jour" data-jours="5">5 jours</button>
+                                <button type="button" class="bouton-jour" data-jours="6">6 jours</button>
+                                <button type="button" class="bouton-jour" data-jours="7">7 jours</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="bouton-soumettre">Voir la météo</button>
+                    </form>
+                </div>
+
+                <div class="panneau-droite">
+                    <h3><i class="fas fa-map-marked-alt"></i> Localisation</h3>
+                    <div class="apercu-carte" id="apercu-carte">
+                        <div class="placeholder-carte">
+                            <div class="icone-carte"><i class="fas fa-globe"></i></div>
+                            <p>Sélectionnez une ville pour voir la carte</p>
+                        </div>
                     </div>
-                    <div class="option">
-                        <input type="checkbox" id="pluie" value="pluie">
-                        <label for="pluie">☔ Pluie (mm)</label>
-                    </div>
-                    <div class="option">
-                        <input type="checkbox" id="vent" value="vent">
-                        <label for="vent">🌬 Vent (km/h)</label>
-                    </div>
-                    <div class="option">
-                        <input type="checkbox" id="direction-vent" value="direction-vent">
-                        <label for="direction-vent">🧭 Direction vent (°)</label>
+                    <div class="info-localisation" id="info-localisation">
+                        <p>Coordonnées s'afficheront ici</p>
                     </div>
                 </div>
             </div>
 
-            <div class="panneau-centre">
-                <form id="formulaire-meteo">
-                    <div class="groupe-formulaire">
-                        <label for="code-postal">Code postal :</label>
-                        <input type="text" id="code-postal" placeholder="Ex: 75001" maxlength="5" required>
-                    </div>
-
-                    <div class="groupe-formulaire">
-                        <label for="ville">Ville :</label>
-                        <select id="ville" required>
-                            <option value="">Choisissez une ville</option>
-                        </select>
-                    </div>
-
-                    <div class="groupe-formulaire">
-                        <label>Nombre de jours :</label>
-                        <div class="selecteur-jours">
-                            <button type="button" class="bouton-jour" data-jours="1">1 jour</button>
-                            <button type="button" class="bouton-jour" data-jours="2">2 jours</button>
-                            <button type="button" class="bouton-jour actif" data-jours="3">3 jours</button>
-                            <button type="button" class="bouton-jour" data-jours="4">4 jours</button>
-                            <button type="button" class="bouton-jour" data-jours="5">5 jours</button>
-                            <button type="button" class="bouton-jour" data-jours="6">6 jours</button>
-                            <button type="button" class="bouton-jour" data-jours="7">7 jours</button>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="bouton-soumettre">Voir la météo</button>
-                </form>
-            </div>
+            <div id="resultats"></div>
         </div>
-
-        <div id="resultats"></div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

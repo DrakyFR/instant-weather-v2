@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Variables pour les couleurs */
+:root {
+    --orange: #ff6b35;
+    --orange-clair: #ff8c42;
+    --orange-fonce: #e55a2b;
+    --noir: #1a1a1a;
+    --noir-leger: #2c2c2c;
+    --blanc: #ffffff;
+    --gris: #f8f9fa;
+    --gris-fonce: #6c757d;
+    --shadow: rgba(0, 0, 0, 0.1);
+    --shadow-hover: rgba(255, 107, 53, 0.3);
+}
+
+/* Style de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--noir);
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+/* Mode sombre */
+body.sombre {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    color: var(--blanc);
+}
+
+body.sombre .conteneur,
+body.sombre .panneau-gauche, 
+body.sombre .panneau-centre, 
+body.sombre .panneau-droite {
+    background: rgba(44, 44, 44, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.sombre input, body.sombre select {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--blanc);
+    border-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+body.sombre input:focus, body.sombre select:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+}
+
+/* En-tête avec effet glassmorphism */
+.en-tete {
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-clair) 100%);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+}
+
+.en-tete::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.en-tete h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bouton-theme {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    z-index: 3;
+}
+
+.bouton-theme:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1) rotate(180deg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Conteneur principal avec glassmorphism */
+.conteneur {
+    max-width: 1200px;
+    margin: -20px auto 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideUp 1s ease-out 0.3s both;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Layout principal en 3 colonnes avec animations */
+.disposition-principale {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.panneau-gauche, .panneau-centre, .panneau-droite {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    animation: fadeIn 1s ease-out;
+}
+
+.panneau-gauche:hover, .panneau-centre:hover, .panneau-droite:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px var(--shadow-hover);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.panneau-gauche h3, .panneau-droite h3 {
+    color: var(--orange);
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.panneau-gauche h3::after, .panneau-droite h3::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(45deg, var(--orange), var(--orange-clair));
+    border-radius: 2px;
+}
+
+.planet::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        /* Afrique */
+        radial-gradient(ellipse 25px 40px at 45% 35%, #4CAF50 0%, #4CAF50 70%, transparent 71%),
+        /* Europe */
+        radial-gradient(ellipse 15px 20px at 40% 25%, #66BB6A 0%, #66BB6A 70%, transparent 71%),
+        /* Asie */
+        radial-gradient(ellipse 35px 30px at 70% 30%, #388E3C 0%, #388E3C 70%, transparent 71%),
+        /* Amérique du Sud */
+        radial-gradient(ellipse 20px 35px at 20% 60%, #43A047 0%, #43A047 70%, transparent 71%),
+        /* Amérique du Nord */
+        radial-gradient(ellipse 25px 30px at 15% 35%, #2E7D32 0%, #2E7D32 70%, transparent 71%),
+        /* Australie */
+        radial-gradient(ellipse 12px 8px at 75% 70%, #558B2F 0%, #558B2F 70%, transparent 71%);
+    border-radius: 50%;
+    animation: continentsRotate 3s linear infinite;
+}
+
+/* Nuages qui bougent */
+.planet::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(ellipse 20px 10px at 30% 20%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 50%, transparent 70%),
+        radial-gradient(ellipse 15px 8px at 60% 40%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 50%, transparent 70%),
+        radial-gradient(ellipse 18px 12px at 80% 65%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 70%),
+        radial-gradient(ellipse 25px 15px at 10% 75%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    border-radius: 50%;
+    animation: cloudsMove 8s linear infinite;
+}
+
+.orbit {
+    width: 160px;
+    height: 160px;
+    border: 2px dashed var(--orange);
+    border-radius: 50%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: orbitRotate 4s linear infinite;
+    opacity: 0.7;
+}
+
+.satellite {
+    width: 10px;
+    height: 10px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 
+        0 0 15px var(--orange),
+        0 0 30px rgba(255, 107, 53, 0.5);
+    animation: satellitePulse 2s ease-in-out infinite;
+}
+
+/* Petites étoiles autour */
+.stars {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    animation: starsRotate 20s linear infinite;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--orange);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--orange);
+    animation: starTwinkle 3s ease-in-out infinite;
+}
+
+.star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.star:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+.star:nth-child(3) { bottom: 25%; left: 10%; animation-delay: 2s; }
+.star:nth-child(4) { bottom: 15%; right: 25%; animation-delay: 0.5s; }
+.star:nth-child(5) { top: 40%; left: 5%; animation-delay: 1.5s; }
+.star:nth-child(6) { top: 60%; right: 8%; animation-delay: 2.5s; }
+
+.loading-text {
+    color: var(--orange);
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    animation: textPulse 2s ease-in-out infinite;
+    text-shadow: 0 2px 10px rgba(255, 107, 53, 0.3);
+}
+
+body.sombre .loading-text {
+    color: var(--orange-clair);
+}
+
+body.sombre .orbit {
+    border-color: var(--orange-clair);
+}
+
+body.sombre .satellite {
+    background: var(--orange-clair);
+    box-shadow: 
+        0 0 15px var(--orange-clair),
+        0 0 30px rgba(255, 140, 66, 0.5);
+}
+
+body.sombre .star {
+    background: var(--orange-clair);
+    box-shadow: 0 0 6px var(--orange-clair);
+}
+
+@keyframes planetRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes continentsRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes cloudsMove {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes orbitRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes satellitePulse {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateX(-50%) scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+@keyframes starsRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes starTwinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* Messages avec animations */
+.chargement, .erreur {
+    text-align: center;
+    padding: 25px;
+    border-radius: 12px;
+    margin: 25px 0;
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.chargement {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1976d2;
+    border: 1px solid rgba(25, 118, 210, 0.2);
+}
+
+.erreur {
+    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    color: #c62828;
+    border: 1px solid rgba(198, 40, 40, 0.2);
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+body.sombre .chargement {
+    background: linear-gradient(135deg, #1a237e 0%, #303f9f 100%);
+    color: #90caf9;
+}
+
+body.sombre .erreur {
+    background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%);
+    color: #ffcdd2;
+}
+
+/* Loading spinner - SUPPRIMÉ */
+
+/* Responsive avec animations */
+@media (max-width: 900px) {
+    .disposition-principale {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .panneau-gauche, .panneau-centre, .panneau-droite {
+        animation-delay: 0.1s;
+    }
+}
+
+@media (max-width: 600px) {
+    .conteneur {
+        margin: -10px 15px 30px;
+        padding: 20px;
+    }
+
+    .en-tete h1 {
+        font-size: 2rem;
+    }
+
+    .selecteur-jours {
+        justify-content: center;
+    }
+
+    .bouton-jour {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .info-meteo {
+        grid-template-columns: 1fr;
+    }
+
+    .apercu-carte {
+        height: 180px;
+    }
+}
+
+/* Animations d'entrée séquentielles */
+.panneau-gauche {
+    animation-delay: 0.1s;
+}
+
+.panneau-centre {
+    animation-delay: 0.2s;
+}
+
+.panneau-droite {
+    animation-delay: 0.3s;
+}
+
+/* Scroll smooth */
+html {
+    scroll-behavior: smooth;
+}
